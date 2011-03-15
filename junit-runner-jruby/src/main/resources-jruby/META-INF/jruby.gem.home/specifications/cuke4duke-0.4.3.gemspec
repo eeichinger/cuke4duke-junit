@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aslak Helles\303\270y"]
-  s.date = %q{2011-01-16}
+  s.date = %q{2011-01-17}
   s.default_executable = %q{cuke4duke}
   s.description = %q{Write Cucumber Step Definitions in Java, Scala, Groovy, Rhino Javascript, Clojure or Ioke}
   s.email = %q{cukes@googlegroups.com}
