@@ -59,6 +59,32 @@
 		</plugins>
 	</build>
 -->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-jruby-files</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources-jruby</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
@@ -102,7 +128,7 @@
                                             <filtering>false</filtering>
                                         </resource>
                                     </resources>
-                                    <outputDirectory>src/main/resources/META-INF/jruby.gem.home</outputDirectory>
+                                    <outputDirectory>src/main/resources-jruby/META-INF/jruby.gem.home</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
