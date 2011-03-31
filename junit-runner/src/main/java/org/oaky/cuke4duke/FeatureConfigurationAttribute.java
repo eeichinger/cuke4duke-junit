@@ -1,14 +1,14 @@
 package org.oaky.cuke4duke;
 
 import org.apache.tools.ant.BuildException;
-import org.jruby.embed.util.SystemPropertyCatcher;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 
-import static org.jruby.util.URLUtil.getPath;
+//import static org.jruby.util.URLUtil.getPath;
 
 public class FeatureConfigurationAttribute {
 
@@ -156,5 +156,13 @@ public class FeatureConfigurationAttribute {
             }
         }
         return null;
+    }
+
+    private static String getPath(URL url) {
+        try {
+            return url.toURI().getSchemeSpecificPart();
+        } catch (URISyntaxException use) {
+            return url.getPath();
+        }
     }
 }

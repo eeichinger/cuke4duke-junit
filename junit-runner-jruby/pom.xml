@@ -98,7 +98,9 @@
                         <configuration>
                             <installGems>true</installGems>
                             <gems>
-                                <gem>install cuke4duke --version ${cuke4duke.version}</gem>
+                                <gem>install jruby-openssl</gem>
+                                <gem>install cuke4duke</gem>
+                                <!--<gem>install cuke4duke -version ${cuke4duke.version}</gem>-->
                             </gems>
                             <skip>true</skip>
                         </configuration>

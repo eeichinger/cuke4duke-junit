@@ -55,7 +55,10 @@ public class Cuke4DukeJUnit4Runner extends Runner {
         }
 
         if (Check.hasText(fca.getTags())) {
-            argsBuffer.append(" --tags " + fca.getTags());
+            String[] tags = fca.getTags().split(" ");
+            for(String tag:tags) {
+                argsBuffer.append(" --tags " + tag);
+            }
         }
 
         if (Check.hasText(fca.getCustomArguments())) {
