@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
+
     private Cuke4DukeTestContextManager tcm;
     private StaticApplicationContext appContext;
     private final List<Class<?>> classes = new ArrayList<Class<?>>();
@@ -42,14 +43,14 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
     }
 
     public void createObjects() {
-        tcm = new Cuke4DukeTestContextManager(Cuke4DukeJUnit4Runner.getCurrentFeatureClass());
+        Class currentFeatureClass = Cuke4DukeJUnit4Runner.getCurrentFeatureClass();
+        tcm = new Cuke4DukeTestContextManager(currentFeatureClass);
+
         appContext = new StaticApplicationContext();
         appContext.getBeanFactory().addBeanPostProcessor(new TestContextBeanPostProcessor(tcm));
+
         for (Class<?> clazz : classes) {
-            BeanDefinition bd = BeanDefinitionBuilder.genericBeanDefinition(clazz)
-                    .setLazyInit(true)
-                    .getBeanDefinition();
-            appContext.registerBeanDefinition(clazz.getName() + "[" + this.hashCode() + "]", bd);
+            registerBean(clazz);
         }
         for (Object instance : instances) {
             appContext.getBeanFactory().registerSingleton(instance.getClass().getName() + "[" + this.hashCode() + ", instance:" + instance.hashCode() + "]", instance);
@@ -60,6 +61,13 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void registerBean(Class<?> clazz) {
+        BeanDefinition bd = BeanDefinitionBuilder.genericBeanDefinition(clazz)
+                .setLazyInit(true)
+                .getBeanDefinition();
+        appContext.registerBeanDefinition(clazz.getName() + "[" + this.hashCode() + "]", bd);
     }
 
     public void disposeObjects() {

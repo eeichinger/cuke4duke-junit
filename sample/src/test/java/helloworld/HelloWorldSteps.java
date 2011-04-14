@@ -4,6 +4,9 @@ import cuke4duke.annotation.After;
 import cuke4duke.annotation.Before;
 import cuke4duke.annotation.I18n.EN.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+
+import javax.sql.DataSource;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,11 +24,15 @@ public class HelloWorldSteps {
     }
 
     @Autowired
+    private DataSource ds;
+    @Autowired
     private HelloWorldService helloWorldService;
 
     @cuke4duke.annotation.Before
     public void setupScenario() {
         helloWorldContext = new HelloWorldContext();
+        SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
+        jdbc.update("INSERT INTO Entries(entryid,entryname) VALUES(1,'1st')");
     }
 
     @cuke4duke.annotation.After

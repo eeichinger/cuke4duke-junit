@@ -31,6 +31,7 @@ public class Cuke4DukeJUnit4Runner extends Runner {
             task.setClasspath(classpath);
 	        String gemHome = fca.getGemHome();
 	        task.setGemHome(gemHome);
+            System.out.println("workingdir=" + new File(".").getAbsolutePath());
 
             String args = buildCommandlineArgs(task);
             task.setArgs(args);

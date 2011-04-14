@@ -13,7 +13,7 @@
     <context:component-scan base-package="helloworld"/>
 
     <jdbc:embedded-database id="myDS">
-        <!--<jdbc:script location="classpath:schema.sql"/>-->
+        <jdbc:script location="classpath:/helloworld/HelloWorldFeature-schema.sql"/>
     </jdbc:embedded-database>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
