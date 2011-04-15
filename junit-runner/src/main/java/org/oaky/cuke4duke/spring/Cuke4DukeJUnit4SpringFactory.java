@@ -1,6 +1,7 @@
 package org.oaky.cuke4duke.spring;
 
 import cuke4duke.StepMother;
+import cuke4duke.annotation.I18n;
 import cuke4duke.internal.jvmclass.ObjectFactory;
 import org.oaky.cuke4duke.Cuke4DukeJUnit4Runner;
 import org.springframework.beans.BeansException;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.test.context.TestContextManager;
 
 import java.util.ArrayList;
@@ -17,10 +18,11 @@ import java.util.List;
 public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
 
     private Cuke4DukeTestContextManager tcm;
-    private StaticApplicationContext appContext;
+    private DefaultListableBeanFactory beanFactory;
     private final List<Class<?>> classes = new ArrayList<Class<?>>();
     private final List<Object> instances = new ArrayList<Object>();
-
+    private final AnnotationTester annotationTester = new AnnotationTester(I18n.EN.class);
+    
     private static class TestContextBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter {
         private final TestContextManager tcm;
 
@@ -46,16 +48,16 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         Class currentFeatureClass = Cuke4DukeJUnit4Runner.getCurrentFeatureClass();
         tcm = new Cuke4DukeTestContextManager(currentFeatureClass);
 
-        appContext = new StaticApplicationContext();
-        appContext.getBeanFactory().addBeanPostProcessor(new TestContextBeanPostProcessor(tcm));
+        beanFactory = new DefaultListableBeanFactory();
+        beanFactory.addBeanPostProcessor(new TestContextBeanPostProcessor(tcm));
 
         for (Class<?> clazz : classes) {
             registerBean(clazz);
         }
         for (Object instance : instances) {
-            appContext.getBeanFactory().registerSingleton(instance.getClass().getName() + "[" + this.hashCode() + ", instance:" + instance.hashCode() + "]", instance);
+            beanFactory.registerSingleton(instance.getClass().getName() + "[" + this.hashCode() + ", instance:" + instance.hashCode() + "]", instance);
         }
-        appContext.refresh();
+//        beanFactory.refresh();
         try {
             tcm.beforeTestMethod();
         } catch (Exception e) {
@@ -67,22 +69,22 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         BeanDefinition bd = BeanDefinitionBuilder.genericBeanDefinition(clazz)
                 .setLazyInit(true)
                 .getBeanDefinition();
-        appContext.registerBeanDefinition(clazz.getName() + "[" + this.hashCode() + "]", bd);
+        beanFactory.registerBeanDefinition(clazz.getName() + "[" + this.hashCode() + "]", bd);
     }
 
     public void disposeObjects() {
         try {
             tcm.afterTestMethod();
-            appContext.close();
+            beanFactory.destroySingletons();
         } finally {
             tcm = null;
-            appContext = null;
+            beanFactory = null;
         }
     }
 
     public boolean canHandle(Class<?> clazz) {
-        return !clazz.getName().startsWith(this.getClass().getPackage().getName());
-//        return true;
+//        return !clazz.getName().startsWith(this.getClass().getPackage().getName());
+        return annotationTester.isMatch(clazz);
     }
 
     public void addClass(Class<?> clazz) {
@@ -93,13 +95,8 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         instances.add(instance);
     }
 
-    /*
-        public <T> T getComponent(Class<T> type) {
-            return pico.getComponent(type);
-        }
-    */
     public <T> T getComponent(Class<T> type) {
-        List beans = new ArrayList(appContext.getBeansOfType(type).values());
+        List beans = new ArrayList(beanFactory.getBeansOfType(type).values());
         if (beans.size() == 1) {
             T testInstance = (T) beans.get(0);
             return testInstance;

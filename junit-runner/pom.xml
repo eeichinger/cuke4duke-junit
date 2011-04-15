@@ -29,6 +29,7 @@
         <dependency>
             <groupId>cuke4duke</groupId>
             <artifactId>cuke4duke</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

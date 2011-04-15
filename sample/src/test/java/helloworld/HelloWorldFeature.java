@@ -24,12 +24,12 @@ public class HelloWorldFeature {
 
     @BeforeTransaction
     public void setupDb() {
-//        SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
-//        jdbc.update("INSERT INTO Entries(entryid,entryname) VALUES(1,'1st')");
+        System.out.println("BeforeTransaction");
     }
 
     @AfterTransaction
     public void tearDownDb() {
+        System.out.println("AfterTransaction");
         SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
         Assert.assertEquals(0, jdbc.queryForInt("SELECT count(*) FROM Entries"));
     }
