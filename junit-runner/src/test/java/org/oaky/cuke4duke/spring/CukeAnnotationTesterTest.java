@@ -1,14 +1,17 @@
 package org.oaky.cuke4duke.spring;
 
+import cuke4duke.annotation.Before;
 import cuke4duke.annotation.I18n;
 import cuke4duke.annotation.I18n.EN.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
 
 /**
  * TODO: describe purpose of class/interface
  */
-public class AnnotationTesterTest {
+public class CukeAnnotationTesterTest {
 
     public static class TestClass1 {}
 
@@ -20,6 +23,11 @@ public class AnnotationTesterTest {
     public static class TestClass3 extends TestClass2 {
     }
 
+    @RunWith(Runner.class)
+    public static class TestClass4 {
+        @When("")
+        public void method() {}
+    }
     @Test
     public void should_reject_class_without_any_annotation() throws Exception {
         assertRejects(TestClass1.class);
@@ -35,14 +43,19 @@ public class AnnotationTesterTest {
         assertAccepts(TestClass3.class);
     }
 
+    @Test
+    public void should_reject_method_with_RunWith_annotation() throws Exception {
+        assertRejects(TestClass4.class);
+    }
+
     private static void assertAccepts(Class clazz) {
-        AnnotationTester tester = new AnnotationTester(I18n.class);
+        CukeAnnotationTester tester = new CukeAnnotationTester();
         boolean result = tester.isMatch(clazz);
         Assert.assertTrue(result);
     }
 
     private static void assertRejects(Class clazz) {
-        AnnotationTester tester = new AnnotationTester(I18n.class);
+        CukeAnnotationTester tester = new CukeAnnotationTester();
         boolean result = tester.isMatch(clazz);
         Assert.assertFalse(result);
     }

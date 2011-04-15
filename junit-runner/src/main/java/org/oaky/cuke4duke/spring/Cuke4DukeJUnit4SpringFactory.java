@@ -21,7 +21,7 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
     private DefaultListableBeanFactory beanFactory;
     private final List<Class<?>> classes = new ArrayList<Class<?>>();
     private final List<Object> instances = new ArrayList<Object>();
-    private final AnnotationTester annotationTester = new AnnotationTester(I18n.EN.class);
+    private final CukeAnnotationTester annotationTester = new CukeAnnotationTester();
     
     private static class TestContextBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter {
         private final TestContextManager tcm;

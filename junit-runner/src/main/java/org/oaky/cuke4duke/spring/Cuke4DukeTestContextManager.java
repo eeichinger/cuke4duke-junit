@@ -24,6 +24,7 @@ public class Cuke4DukeTestContextManager extends TestContextManager {
             this.testInstance = testClass.newInstance();
             this.testMethod = testClass.getMethod("toString");
             applyTransactionAttributeSourceFix(getTestExecutionListeners());
+            getTestExecutionListeners().add(new BeforeAfterTestExecutionListener());
             prepareTestInstance(this.testInstance);
         } catch (Exception e) {
             throw new RuntimeException(e);
