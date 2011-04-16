@@ -110,12 +110,6 @@ public class JUnitRunnerCucumberTask extends CucumberTask {
 		
 		args[0] = gemHomeString + "/bin/cuke4duke";
 		
-//		if (gemHomeString.contains(":\\")) { // we're on windows filesystem
-//			args[0] = gemHomeString + "\\bin\\cuke4duke";
-//		} else {
-//			args[0] = gemHomeString + "/bin/cuke4duke";
-//		}
-
         if (log.isDebugEnabled()) {
             log.debug("workingdir='"+new File(".").getAbsolutePath());
             log.debug("classpath=" + this.getClasspath());
