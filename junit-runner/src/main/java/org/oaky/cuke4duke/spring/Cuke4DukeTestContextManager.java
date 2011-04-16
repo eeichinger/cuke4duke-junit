@@ -1,5 +1,6 @@
 package org.oaky.cuke4duke.spring;
 
+import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.TestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -29,6 +30,10 @@ public class Cuke4DukeTestContextManager extends TestContextManager {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public TestContext getContext() {
+        return super.getTestContext();
     }
 
     /**

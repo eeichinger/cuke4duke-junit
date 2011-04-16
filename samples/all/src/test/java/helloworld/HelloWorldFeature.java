@@ -1,6 +1,8 @@
 package helloworld;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.oaky.cuke4duke.Cuke4DukeJUnit4Runner;
 import org.oaky.cuke4duke.FeatureConfiguration;
 import org.junit.runner.RunWith;
@@ -33,4 +35,14 @@ public class HelloWorldFeature {
         SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
         Assert.assertEquals(0, jdbc.queryForInt("SELECT count(*) FROM Entries"));
     }
+
+    @Before
+    public void setupScenario() {
+        SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
+        jdbc.update("INSERT INTO Entries(entryid,entryname) VALUES(1,'1st')");
+    }
+
+    @After
+    public void teardownScenario() {
+    }    
 }

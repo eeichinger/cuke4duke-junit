@@ -5,7 +5,9 @@ import cuke4duke.annotation.I18n;
 import cuke4duke.internal.jvmclass.ObjectFactory;
 import org.oaky.cuke4duke.Cuke4DukeJUnit4Runner;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -23,10 +25,13 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
     private final List<Object> instances = new ArrayList<Object>();
     private final CukeAnnotationTester annotationTester = new CukeAnnotationTester();
     
-    private static class TestContextBeanPostProcessor extends InstantiationAwareBeanPostProcessorAdapter {
-        private final TestContextManager tcm;
+    private static class TestContextBeanPostProcessor extends
+            AutowiredAnnotationBeanPostProcessor {
+//            InstantiationAwareBeanPostProcessorAdapter {
+        private final Cuke4DukeTestContextManager tcm;
 
-        private TestContextBeanPostProcessor(TestContextManager tcm) {
+        private TestContextBeanPostProcessor(Cuke4DukeTestContextManager tcm, BeanFactory beanFactory) {
+            super.setBeanFactory(beanFactory);
             this.tcm = tcm;
         }
 
@@ -48,8 +53,9 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         Class currentFeatureClass = Cuke4DukeJUnit4Runner.getCurrentFeatureClass();
         tcm = new Cuke4DukeTestContextManager(currentFeatureClass);
 
-        beanFactory = new DefaultListableBeanFactory();
-        beanFactory.addBeanPostProcessor(new TestContextBeanPostProcessor(tcm));
+        BeanFactory parentBeanFactory = tcm.getContext().getApplicationContext().getAutowireCapableBeanFactory();
+        beanFactory = new DefaultListableBeanFactory(parentBeanFactory);
+        beanFactory.addBeanPostProcessor(new TestContextBeanPostProcessor(tcm, beanFactory));
 
         for (Class<?> clazz : classes) {
             registerBean(clazz);

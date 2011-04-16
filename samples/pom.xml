@@ -15,6 +15,7 @@
 
     <modules>
         <module>hellocucumber</module>
+        <module>hellocucumber-spring</module>
         <module>all</module>
     </modules>
 
