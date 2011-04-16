@@ -25,7 +25,7 @@
         <module>junit-runner-parent</module>
         <module>junit-runner-jruby</module>
         <module>junit-runner</module>
-        <module>sample</module>
+        <module>samples</module>
     </modules>
 
     <build>

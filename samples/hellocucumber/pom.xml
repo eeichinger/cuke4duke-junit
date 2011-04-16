@@ -8,10 +8,10 @@
         <groupId>org.oaky.cuke4duke</groupId>
         <artifactId>junit-runner-parent</artifactId>
         <version>0.0.4-SNAPSHOT</version>
-        <relativePath>../junit-runner-parent</relativePath>
+        <relativePath>../../junit-runner-parent</relativePath>
     </parent>
 
-    <artifactId>junit-runner-sample</artifactId>
+    <artifactId>hellocucumber</artifactId>
 
     <dependencies>
         <dependency>
