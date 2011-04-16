@@ -6,6 +6,8 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cuke4DukeJUnit4Runner extends Runner {
 
@@ -72,8 +74,24 @@ public class Cuke4DukeJUnit4Runner extends Runner {
     }
 
     private void requireClasspath(StringBuffer argsBuffer) {
-        String classpath = System.getProperty("java.class.path");
-        String[] classpathElements = classpath.split(File.pathSeparator);
+        List<String> classpathElements = new ArrayList<String>();
+
+        String require = fca.getRequire();
+        if (require != null && require.trim().length() > 0) {
+            require = require.replace(';',':');
+            String[] cpes = require.split(":");
+            for(String cpe:cpes) {
+                classpathElements.add(cpe);
+            }
+        } else {
+            String classpath = System.getProperty("java.class.path");
+            String[] cpes = classpath.split(File.pathSeparator);
+            for (String classpathElement : cpes) {
+                if (!classpathElement.endsWith(".jar")
+                    && !classpathElement.contains("junit-runner"))
+                    classpathElements.add(classpathElement);
+            }
+        }
 
         for (String classpathElement : classpathElements) {
             if (!classpathElement.endsWith(".jar")

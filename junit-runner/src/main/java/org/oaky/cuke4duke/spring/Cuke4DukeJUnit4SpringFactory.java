@@ -63,7 +63,7 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
         for (Object instance : instances) {
             beanFactory.registerSingleton(instance.getClass().getName() + "[" + this.hashCode() + ", instance:" + instance.hashCode() + "]", instance);
         }
-//        beanFactory.refresh();
+
         try {
             tcm.beforeTestMethod();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
     }
 
     public boolean canHandle(Class<?> clazz) {
-//        return !clazz.getName().startsWith(this.getClass().getPackage().getName());
+        // we're only interested in Step implementations
         return annotationTester.isMatch(clazz);
     }
 

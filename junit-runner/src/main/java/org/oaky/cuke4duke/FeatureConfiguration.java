@@ -19,6 +19,8 @@ public @interface FeatureConfiguration {
     String strict() default "";
     @Property("cuke4duke.tags")
     String tags() default "";
+    @Property("cuke4duke.require")
+    String require() default "";
     @Property("cuke4duke.customArguments")
     String customArguments() default "";
 }

@@ -23,6 +23,7 @@ public class FeatureConfigurationAttribute {
     private final Class objectFactoryClass;
     private final boolean strict;
     private final String tags;
+    private final String require;
     private final String customArguments;
 
     public FeatureConfigurationAttribute(Class clazz) {
@@ -39,6 +40,7 @@ public class FeatureConfigurationAttribute {
         objectFactoryClass = runtimeProperties.getClass("cuke4duke.objectFactory", null);
         strict = runtimeProperties.getBoolean("cuke4duke.strict", true);
         tags = runtimeProperties.getString("cuke4duke.tags", null);
+        require = runtimeProperties.getString("cuke4duke.require", null);
         customArguments = runtimeProperties.getString("cuke4duke.customArguments", null);
     }
 
@@ -60,6 +62,10 @@ public class FeatureConfigurationAttribute {
 
     public String getTags() {
         return tags;
+    }
+
+    public String getRequire() {
+        return require;
     }
 
     public String getGemHome() {
