@@ -1,6 +1,8 @@
 package org.oaky.cuke4duke;
 
 import cuke4duke.ant.CucumberTask;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.CommandlineJava;
 import org.apache.tools.ant.types.Path;
@@ -24,6 +26,7 @@ import java.util.Properties;
 
 public class JUnitRunnerCucumberTask extends CucumberTask {
 
+    private final Log log = LogFactory.getLog(this.getClass());
     private final Map<String,String> envVars = new HashMap<String,String>();
 
     public JUnitRunnerCucumberTask() {
@@ -41,6 +44,10 @@ public class JUnitRunnerCucumberTask extends CucumberTask {
         getProject().addReference("jruby.classpath", path);
     }
 
+    public String getClasspath() {
+        return ((Path) getProject().getReference("jruby.classpath")).toString();
+    }
+    
     public void setObjectFactory(Class clazz) {
         if (clazz != null) {
             envVars.put("cuke4duke.objectFactory", clazz.getName());
@@ -109,11 +116,15 @@ public class JUnitRunnerCucumberTask extends CucumberTask {
 //			args[0] = gemHomeString + "/bin/cuke4duke";
 //		}
 
-		for(String arg:args) {
-			System.out.println("Args:" + arg);
-		}
-		System.out.println("gem.home=" + System.getProperty("jruby.gem.home") );
-		System.out.println("gem.path=" + System.getProperty("jruby.gem.path") );
+        if (log.isDebugEnabled()) {
+            log.debug("workingdir='"+new File(".").getAbsolutePath());
+            log.debug("classpath=" + this.getClasspath());
+            log.debug("jruby.gem.home=" + System.getProperty("jruby.gem.home") );
+            log.debug("jruby.gem.path=" + System.getProperty("jruby.gem.path") );
+            for(String arg:args) {
+                log.debug("Args:" + arg);
+            }
+        }
 
 		final ByteArrayInputStream in = new ByteArrayInputStream(new byte[0]);
 		final PrintStream out = new PrintStream(os);

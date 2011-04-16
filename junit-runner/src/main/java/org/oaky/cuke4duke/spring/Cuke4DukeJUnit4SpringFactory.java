@@ -8,6 +8,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -74,23 +75,28 @@ public class Cuke4DukeJUnit4SpringFactory implements ObjectFactory {
     private void registerBean(Class<?> clazz) {
         BeanDefinition bd = BeanDefinitionBuilder.genericBeanDefinition(clazz)
                 .setLazyInit(true)
+                .setAutowireMode(AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR)
                 .getBeanDefinition();
         beanFactory.registerBeanDefinition(clazz.getName() + "[" + this.hashCode() + "]", bd);
     }
 
     public void disposeObjects() {
         try {
-            tcm.afterTestMethod();
             beanFactory.destroySingletons();
         } finally {
-            tcm = null;
             beanFactory = null;
+        }
+        try {
+            tcm.afterTestMethod();
+        } finally {
+            tcm = null;
         }
     }
 
     public boolean canHandle(Class<?> clazz) {
         // we're only interested in Step implementations
-        return annotationTester.isMatch(clazz);
+//        return annotationTester.isMatch(clazz);
+        return true;
     }
 
     public void addClass(Class<?> clazz) {

@@ -1,5 +1,7 @@
 package org.oaky.cuke4duke;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.Failure;
@@ -29,11 +31,9 @@ public class Cuke4DukeJUnit4Runner extends Runner {
         try {
             JUnitRunnerCucumberTask task = new JUnitRunnerCucumberTask();
             String classpath = System.getProperty("java.class.path");
-	        System.out.println("classpath=" + classpath);
             task.setClasspath(classpath);
 	        String gemHome = fca.getGemHome();
 	        task.setGemHome(gemHome);
-            System.out.println("workingdir=" + new File(".").getAbsolutePath());
 
             String args = buildCommandlineArgs(task);
             task.setArgs(args);

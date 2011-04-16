@@ -25,24 +25,26 @@ public class HelloWorldFeature {
     DataSource ds;
 
     @BeforeTransaction
-    public void setupDb() {
-        System.out.println("BeforeTransaction");
+    public void beforeScenarioBeginTransaction() {
+        System.out.println("HelloWorldFeature.BeforeTransaction");
     }
 
     @AfterTransaction
-    public void tearDownDb() {
-        System.out.println("AfterTransaction");
+    public void afterScenarioRollbackTransaction() {
+        System.out.println("HelloWorldFeature.AfterTransaction");
         SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
         Assert.assertEquals(0, jdbc.queryForInt("SELECT count(*) FROM Entries"));
     }
 
     @Before
-    public void setupScenario() {
+    public void beforeScenario() {
         SimpleJdbcTemplate jdbc = new SimpleJdbcTemplate(ds);
         jdbc.update("INSERT INTO Entries(entryid,entryname) VALUES(1,'1st')");
+        System.out.println("HelloWorldFeature.BeforeScenario");
     }
 
     @After
-    public void teardownScenario() {
-    }    
+    public void afterScenario() {
+        System.out.println("HelloWorldFeature.AfterScenario");
+    }
 }

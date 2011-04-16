@@ -9,6 +9,5 @@ import org.springframework.test.context.ContextConfiguration;
 @FeatureConfiguration("features/HelloWorld.feature:12")
 @ContextConfiguration("HelloWorldFeature-context.xml")
 public class HelloWorldSingleScenarioFeature {
-
-
+    // runs only the scenario on line 12
 }
