@@ -8,15 +8,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @Ignore
-@FeatureConfiguration("features/HelloWorld.feature")
+@FeatureConfiguration("features/IgnoredFeature.feature")
 @ContextConfiguration("HelloWorldFeature-context.xml")
 @Transactional
 public class IgnoredFeature {
 
     @Autowired
-    MessageSource ms;
+    Object ms;
 
     public IgnoredFeature() {
-        throw new UnsupportedOperationException("should never be invoked!");
     }
 }
