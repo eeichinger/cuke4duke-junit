@@ -78,8 +78,8 @@ public class Cuke4DukeJUnit4Runner extends Runner {
 
         String require = fca.getRequire();
         if (require != null && require.trim().length() > 0) {
-            require = require.replace(';',':');
-            String[] cpes = require.split(":");
+//            require = require.replace(';',':');
+            String[] cpes = require.split(";");
             for(String cpe:cpes) {
                 classpathElements.add(cpe);
             }
