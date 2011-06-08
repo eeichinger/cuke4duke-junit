@@ -4,7 +4,7 @@
 
     <groupId>org.oaky.cuke4duke</groupId>
     <artifactId>junit-runner-reactor</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <scm>
