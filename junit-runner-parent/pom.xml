@@ -28,6 +28,10 @@
     </pluginRepositories>
 
     <properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <maven.compiler.source>1.6</maven.compiler.source>
+	    <maven.compiler.target>1.6</maven.compiler.target>
+
         <cuke4duke.version>0.4.3</cuke4duke.version>
         <jruby.version>1.6.1</jruby.version>
         <spring.version>3.0.5.RELEASE</spring.version>
@@ -45,6 +49,10 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.5</version>
                 </plugin>
+	            <plugin>
+		            <artifactId>maven-compiler-plugin</artifactId>
+		            <version>2.3.2</version>
+	            </plugin>
                 <plugin>
                     <groupId>cuke4duke</groupId>
                     <artifactId>cuke4duke-maven-plugin</artifactId>
@@ -59,6 +67,13 @@
         </pluginManagement>
 
         <plugins>
+	        <plugin>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <configuration>
+			        <source>${maven.compiler.source}</source>
+			        <target>${maven.compiler.target}</target>
+		        </configuration>
+	        </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
