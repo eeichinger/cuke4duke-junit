@@ -29,13 +29,6 @@
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
-<!--
-                <executions>
-                    <execution>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
--->
             </plugin>
         </plugins>
     </build>

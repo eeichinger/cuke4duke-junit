@@ -14,14 +14,13 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://json-jruby.rubyforge.org/}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{json-jruby}
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.5.1}
   s.summary = %q{JSON implementation for JRuby}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
     else
     end
   else

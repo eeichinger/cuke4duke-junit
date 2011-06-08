@@ -42,6 +42,28 @@
             <id>update-jruby</id>
             <build>
                 <plugins>
+	                <plugin>
+		                <artifactId>maven-clean-plugin</artifactId>
+		                <executions>
+			                <execution>
+				                <id>delete-jruby-cache</id>
+				                <phase>generate-resources</phase>
+				                <goals>
+					                <goal>clean</goal>
+				                </goals>
+				                <configuration>
+					                <filesets>
+						                <fileset>
+							                <directory>${settings.localRepository}/.jruby</directory>
+						                </fileset>
+										<fileset>
+											<directory>src/main/resources-jruby/META-INF/jruby.gem.home</directory>
+										</fileset>
+					                </filesets>
+				                </configuration>
+			                </execution>
+		                </executions>
+	                </plugin>
                     <plugin>
                         <groupId>cuke4duke</groupId>
                         <artifactId>cuke4duke-maven-plugin</artifactId>

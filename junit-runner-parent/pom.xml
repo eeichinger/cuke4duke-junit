@@ -30,7 +30,7 @@
 	    <maven.compiler.source>1.6</maven.compiler.source>
 	    <maven.compiler.target>1.6</maven.compiler.target>
 
-        <cuke4duke.version>0.4.3</cuke4duke.version>
+        <cuke4duke.version>0.4.4</cuke4duke.version>
         <jruby.version>1.6.1</jruby.version>
         <spring.version>3.0.5.RELEASE</spring.version>
     </properties>
