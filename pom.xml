@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:git@github.com:eeichinger/utilities.git</connection>
-        <developerConnection>scm:git:git@github.com:eeichinger/utilities.git</developerConnection>
-        <url>https://eeichinger@github.com/eeichinger/utilities.git</url>
+        <connection>scm:git:git@github.com:eeichinger/cuke4duke-junit.git</connection>
+        <developerConnection>scm:git:git@github.com:eeichinger/cuke4duke-junit.git</developerConnection>
+        <url>http://github.com/eeichinger/cuke4duke-junit</url>
     </scm>
 
     <modules>
